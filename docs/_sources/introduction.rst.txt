@@ -1,0 +1,27 @@
+=====================
+`flamingo_api_server`
+=====================
+
+Flamingo API server
+
+flamingo_api_server.flamingo_db_utils
+-------------------------------------
+
+.. automodule:: flamingo_api_server.flamingo_db_utils
+   :members:
+   :undoc-members:
+
+flamingo_api_server.flamingo_utils
+----------------------------------
+
+.. automodule:: flamingo_api_server.flamingo_utils
+   :members:
+   :undoc-members:
+
+flamingo_api_server.OasisApiClient
+----------------------------------
+
+.. automodule:: flamingo_api_server.OasisApiClient
+   :members:
+   :undoc-members:
+

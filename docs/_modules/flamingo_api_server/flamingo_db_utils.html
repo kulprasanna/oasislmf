@@ -1,0 +1,353 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>flamingo_api_server.flamingo_db_utils &#8212; Flamingo 0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for flamingo_api_server.flamingo_db_utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (c) 2013-2016 Oasis LMF Ltd.</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">oasis_utils</span> <span class="k">import</span> <span class="n">oasis_log_utils</span><span class="p">,</span> <span class="n">oasis_db_utils</span>
+
+
+<div class="viewcode-block" id="load_programme_data"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.load_programme_data">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">load_programme_data</span><span class="p">(</span><span class="n">progid</span><span class="p">):</span>
+    <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.LoadProgrammeData ?&quot;</span><span class="p">,</span> <span class="n">progid</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="update_prog_status"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.update_prog_status">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">update_prog_status</span><span class="p">(</span><span class="n">progid</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+    <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.updateProgStatus?, ?&quot;</span><span class="p">,</span> <span class="n">progid</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="update_progoasis_status"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.update_progoasis_status">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">update_progoasis_status</span><span class="p">(</span><span class="n">progoasisid</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+    <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.updateProgOasisStatus?, ?&quot;</span><span class="p">,</span> <span class="n">progoasisid</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_transform_file_names_prog"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.get_transform_file_names_prog">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">get_transform_file_names_prog</span><span class="p">(</span><span class="n">progid</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.getTransformInputFilesForProg ?&quot;</span><span class="p">,</span> <span class="n">progid</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="get_transform_file_names_progoasis"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.get_transform_file_names_progoasis">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">get_transform_file_names_progoasis</span><span class="p">(</span><span class="n">progoasisid</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.getTransformInputFilesForProgOasis ?&quot;</span><span class="p">,</span> <span class="n">progoasisid</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="generate_output_transform_file_records_for_prog"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.generate_output_transform_file_records_for_prog">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">generate_output_transform_file_records_for_prog</span><span class="p">(</span><span class="n">progid</span><span class="p">,</span> <span class="n">canlocfilename</span><span class="p">,</span> <span class="n">canaccfilename</span><span class="p">):</span>
+    <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.generateOutputTransformFileRecordsForProg ?, ?, ?&quot;</span><span class="p">,</span>
+        <span class="n">progid</span><span class="p">,</span> <span class="n">canlocfilename</span><span class="p">,</span> <span class="n">canaccfilename</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="generate_output_transform_file_records_for_progoasis"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.generate_output_transform_file_records_for_progoasis">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">generate_output_transform_file_records_for_progoasis</span><span class="p">(</span><span class="n">progoasisid</span><span class="p">,</span> <span class="n">modelfilename</span><span class="p">):</span>
+    <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.generateOutputTransformFileRecordsForProgOasos ?, ?&quot;</span><span class="p">,</span>
+        <span class="n">progoasisid</span><span class="p">,</span> <span class="n">modelfilename</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_profile_details"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.get_profile_details">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">get_profile_details</span><span class="p">(</span><span class="n">progid</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">fetchall</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.getProfileDetailsForIni ?&quot;</span><span class="p">,</span> <span class="n">progid</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="generate_canonical_model"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.generate_canonical_model">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">generate_canonical_model</span><span class="p">(</span><span class="n">progid</span><span class="p">):</span>
+    <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.generateCanonicalModel ?&quot;</span><span class="p">,</span> <span class="n">progid</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_model_file_extension"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.get_model_file_extension">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">get_model_file_extension</span><span class="p">(</span><span class="n">progoasisid</span><span class="p">):</span>
+    <span class="n">extension</span> <span class="o">=</span>  <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span>
+            <span class="s2">&quot;exec dbo.getModelFileExtension ?&quot;</span><span class="p">,</span> <span class="n">progoasisid</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">extension</span></div>
+
+
+<div class="viewcode-block" id="load_programme_model_details"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.load_programme_model_details">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">load_programme_model_details</span><span class="p">(</span><span class="n">progoasisid</span><span class="p">):</span>
+    <span class="n">status</span> <span class="o">=</span>  <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span>
+            <span class="s2">&quot;exec dbo.LoadProgrammeModelData ?&quot;</span><span class="p">,</span> <span class="n">progoasisid</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">status</span></div>
+
+
+<div class="viewcode-block" id="get_element_run_ids"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.get_element_run_ids">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">get_element_run_ids</span><span class="p">(</span><span class="n">processrunid</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">fetchall</span><span class="p">(</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        SELECT</span>
+<span class="sd">            ElementRunID</span>
+<span class="sd">        FROM</span>
+<span class="sd">            ElementRun</span>
+<span class="sd">        WHERE</span>
+<span class="sd">            ProcessRunID = ?</span>
+<span class="sd">        ORDER BY</span>
+<span class="sd">            WorkflowElementID asc</span>
+<span class="sd">        &quot;&quot;&quot;</span><span class="p">,</span> <span class="n">processrunid</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="generate_oasis_files_outputs"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.generate_oasis_files_outputs">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">generate_oasis_files_outputs</span><span class="p">(</span><span class="n">processrunid</span><span class="p">):</span>
+    <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.generateOasisFilesOutputs ?&quot;</span><span class="p">,</span> <span class="n">processrunid</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_prog_oasis_location"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.get_prog_oasis_location">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">get_prog_oasis_location</span><span class="p">(</span><span class="n">processrunid</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.getLocationNameForProcessRunId ?&quot;</span><span class="p">,</span> <span class="n">processrunid</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="get_process_run_locationid"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.get_process_run_locationid">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">get_process_run_locationid</span><span class="p">(</span>
+    <span class="n">prog_oasis_location</span><span class="p">,</span> <span class="n">process_dir</span><span class="p">,</span> <span class="n">processrunid</span><span class="p">):</span>
+
+    <span class="k">return</span> <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.generateLocationRecord ?, ?, ?&quot;</span><span class="p">,</span>
+        <span class="n">prog_oasis_location</span><span class="p">,</span> <span class="n">process_dir</span><span class="p">,</span> <span class="s2">&quot;ProcessRun_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">processrunid</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="generate_oasis_files_records_outputs"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.generate_oasis_files_records_outputs">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">generate_oasis_files_records_outputs</span><span class="p">(</span>
+        <span class="n">processrunid</span><span class="p">,</span> <span class="n">process_run_locationid</span><span class="p">):</span>
+    <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        exec dbo.generateOasisFilesRecordsOutputs </span>
+<span class="sd">            @ProcessRunId = ?, </span>
+<span class="sd">            @LocationID = ?,</span>
+<span class="sd">            @GulSummaryXrefFileName = ?,</span>
+<span class="sd">            @FMSummaryXrefFileName = ?</span>
+<span class="sd">        &quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="n">processrunid</span><span class="p">,</span> <span class="n">process_run_locationid</span><span class="p">,</span> 
+        <span class="s1">&#39;gulsummaryxref.csv&#39;</span> <span class="p">,</span> <span class="s1">&#39;fmsummaryxref.csv&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_general_settings"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.get_general_settings">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">get_general_settings</span><span class="p">(</span><span class="n">processrunid</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">fetchall</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.getParametersJSONGeneral ?&quot;</span><span class="p">,</span> <span class="n">processrunid</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_model_settings"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.get_model_settings">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">get_model_settings</span><span class="p">(</span><span class="n">processrunid</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">fetchall</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.getParametersJSONModel ?&quot;</span><span class="p">,</span> <span class="n">processrunid</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_gul_summaries"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.get_gul_summaries">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">get_gul_summaries</span><span class="p">(</span><span class="n">processrunid</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">fetchall</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.getParametersJSONSummariesGUL ?&quot;</span><span class="p">,</span> <span class="n">processrunid</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_il_summaries"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.get_il_summaries">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">get_il_summaries</span><span class="p">(</span><span class="n">processrunid</span><span class="p">):</span> 
+    <span class="k">return</span> <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">fetchall</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.getParametersJSONSummariesIL ?&quot;</span><span class="p">,</span> <span class="n">processrunid</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="log_element_run_to_db"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.log_element_run_to_db">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">log_element_run_to_db</span><span class="p">(</span><span class="n">element_run_id</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
+
+    <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        exec dbo.LogElementRun</span>
+<span class="sd">            @ElementRunID = ?,</span>
+<span class="sd">            @Status = ?,</span>
+<span class="sd">            @Description = ?</span>
+<span class="sd">        &quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="n">element_run_id</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="update_process_run_status"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.update_process_run_status">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">update_process_run_status</span><span class="p">(</span>
+        <span class="n">processrunid</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+    <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        UPDATE</span>
+<span class="sd">            dbo.ProcessRun</span>
+<span class="sd">        SET</span>
+<span class="sd">            ProcessRunStatus = ?</span>
+<span class="sd">        WHERE</span>
+<span class="sd">            ProcessRunID = ?</span>
+<span class="sd">        &quot;&quot;&quot;</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">processrunid</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_api1a_return_data"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.get_api1a_return_data">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">get_api1a_return_data</span><span class="p">(</span><span class="n">progoasisid</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="s2">&quot;exec getAPI1aReturnData ?, ?, 1&quot;</span><span class="p">,</span>
+        <span class="n">progoasisid</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_api_error_file_record"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.create_api_error_file_record">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">create_api_error_file_record</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">progoasisid</span><span class="p">):</span>
+    <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="s2">&quot;exec createAPIErrorFileRecord ?, ?&quot;</span><span class="p">,</span>
+        <span class="n">filename</span><span class="p">,</span> <span class="n">progoasisid</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_prog_oasis_details"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.get_prog_oasis_details">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">get_prog_oasis_details</span><span class="p">(</span><span class="n">progoasisid</span><span class="p">):</span>
+    <span class="p">(</span><span class="n">progid</span><span class="p">,</span> <span class="n">modelid</span><span class="p">,</span> <span class="n">fileid</span><span class="p">)</span> <span class="o">=</span> <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.getProgOasisDetails ?&quot;</span><span class="p">,</span> <span class="n">progoasisid</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s2">&quot;Prog ID=</span><span class="si">{}</span><span class="s2">; Model ID = </span><span class="si">{}</span><span class="s2">; File ID = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">progid</span><span class="p">,</span> <span class="n">modelid</span><span class="p">,</span> <span class="n">fileid</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">progid</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">modelid</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">fileid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Failed to get ProgOasis details&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">progid</span><span class="p">,</span> <span class="n">modelid</span><span class="p">,</span> <span class="n">fileid</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_api_uri_and_systemname"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.get_api_uri_and_systemname">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">get_api_uri_and_systemname</span><span class="p">(</span><span class="n">modelid</span><span class="p">):</span>
+    <span class="p">(</span><span class="n">targetURI</span><span class="p">,</span> <span class="n">systemname</span><span class="p">)</span> <span class="o">=</span> <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.getAPIURL ?&quot;</span><span class="p">,</span> <span class="n">modelid</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">targetURI</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">systemname</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Failed to get API URL&quot;</span><span class="p">)</span>    
+    <span class="k">return</span> <span class="p">(</span><span class="n">targetURI</span><span class="p">,</span> <span class="n">systemname</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_filename"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.get_filename">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">get_filename</span><span class="p">(</span><span class="n">file_id</span><span class="p">):</span>
+    <span class="p">(</span><span class="n">filelocation</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span> <span class="o">=</span> <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        SELECT</span>
+<span class="sd">            L.LocationPathUnix AS LocationName,</span>
+<span class="sd">            F.FileName</span>
+<span class="sd">        FROM</span>
+<span class="sd">            [dbo].[File] as F,</span>
+<span class="sd">            Location as L</span>
+<span class="sd">        WHERE</span>
+<span class="sd">            L.LocationID = F.LocationID</span>
+<span class="sd">        AND</span>
+<span class="sd">            F.FileId = ?</span>
+<span class="sd">        &quot;&quot;&quot;</span><span class="p">,</span> <span class="n">file_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">filelocation</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">filename</span></div>
+
+
+<div class="viewcode-block" id="generate_oasis_files"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.generate_oasis_files">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">generate_oasis_files</span><span class="p">(</span><span class="n">progoasisid</span><span class="p">):</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.generateOasisFiles2 ?&quot;</span><span class="p">,</span> <span class="n">progoasisid</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">status</span></div>
+
+
+<div class="viewcode-block" id="generate_location_record"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.generate_location_record">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">generate_location_record</span><span class="p">(</span>
+        <span class="n">oasis_files_directory</span><span class="p">,</span> <span class="n">progoasis_directory</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+
+    <span class="n">location_id</span> <span class="o">=</span> <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span>
+        <span class="s2">&quot;exec dbo.generateLocationRecord ?, ?, ?&quot;</span><span class="p">,</span>
+        <span class="n">oasis_files_directory</span><span class="p">,</span> <span class="n">progoasis_directory</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">location_id</span></div>
+
+
+<div class="viewcode-block" id="generate_oasis_file_records"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.generate_oasis_file_records">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">generate_oasis_file_records</span><span class="p">(</span><span class="n">progoasisid</span><span class="p">,</span> <span class="n">location_id</span><span class="p">):</span>
+    <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        exec dbo.generateOasisFilesRecords </span>
+<span class="sd">            @ProgOasisId = ?,</span>
+<span class="sd">            @LocationID = ?, </span>
+<span class="sd">            @ItemsFileName = &#39;items.csv&#39;, </span>
+<span class="sd">            @CoveragesFileName = &#39;coverages.csv&#39;,</span>
+<span class="sd">            @ItemDictFileName = &#39;ItemDict.csv&#39;,</span>
+<span class="sd">            @FMProgrammeFileName = &#39;fm_programme.csv&#39;,</span>
+<span class="sd">            @FMPolicyTCFileName = &#39;fm_policytc.csv&#39;,</span>
+<span class="sd">            @FMProfileFileName = &#39;fm_profile.csv&#39;,</span>
+<span class="sd">            @FMXRefFileName = &#39;fm_xref.csv&#39;,</span>
+<span class="sd">            @FMDictFileName = &#39;FMDict.csv&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span><span class="p">,</span> <span class="n">progoasisid</span><span class="p">,</span> <span class="n">location_id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_base_url"><a class="viewcode-back" href="../../modules.html#flamingo_api_server.flamingo_db_utils.get_base_url">[docs]</a><span class="nd">@oasis_log_utils</span><span class="o">.</span><span class="n">oasis_log</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">get_base_url</span><span class="p">(</span><span class="n">runid</span><span class="p">):</span>
+    <span class="n">base_url</span> <span class="o">=</span> <span class="n">oasis_db_utils</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span><span class="s2">&quot;exec dbo.getOasisURL ?&quot;</span><span class="p">,</span> <span class="n">runid</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Base URL = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_url</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">base_url</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Oasis Loss Modelling Framework (v. 0.7, 12 August, 2017)..
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
